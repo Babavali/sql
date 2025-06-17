@@ -1,26 +1,26 @@
 -- Merchant Table
 DROP TABLE IF EXISTS `Merchant`;
 CREATE TABLE `Merchant` (
-    `MerchantName` VARCHAR(100) NOT NULL,
-    `MerchantTaxID` VARCHAR(50),
-    `MerchantStatus` VARCHAR(50) NOT NULL,
-    `MerchantAddress` VARCHAR(100),
-    `MerchantEmail` VARCHAR(100),
-    `MerchantPhone` VARCHAR(50),
-    `MerchantRegistrationDate` DATETIME,
+    `merchantName` VARCHAR(100) NOT NULL,
+    `merchantTaxId` VARCHAR(50),
+    `merchantStatus` VARCHAR(50) NOT NULL,
+    `merchantAddress` VARCHAR(100),
+    `merchantEmail` VARCHAR(100),
+    `merchantPhone` VARCHAR(50),
+    `merchantRegistrationDate` DATETIME,
     PRIMARY KEY (`MerchantTaxID`)
 );
 
 -- Product Table
 DROP TABLE IF EXISTS `Product`;
 CREATE TABLE `Product` (
-    `ProductSKU` VARCHAR(50) PRIMARY KEY,
-    `ProductName` VARCHAR(100) NOT NULL,
-    `ProductPrice` DECIMAL(10,2) NOT NULL,
-    `ProductCurrency` VARCHAR(3) NOT NULL,
-    `ProductCategory` VARCHAR(50),
-    `ProductStock` INT NOT NULL DEFAULT 0,
-    `ProductDescription` VARCHAR(100),
+    `productSku` VARCHAR(50) PRIMARY KEY,
+    `productName` VARCHAR(100) NOT NULL,
+    `productPrice` DECIMAL(10,2) NOT NULL,
+    `productCurrency` VARCHAR(3) NOT NULL,
+    `productCategory` VARCHAR(50),
+    `productStock` INT NOT NULL DEFAULT 0,
+    `productDescription` VARCHAR(100),
     `MerchantTaxID` VARCHAR(50),
     FOREIGN KEY (`MerchantTaxID`) REFERENCES `Merchant`(`MerchantTaxID`)
 );
@@ -28,13 +28,13 @@ CREATE TABLE `Product` (
 -- Order Table
 DROP TABLE IF EXISTS `Order`;
 CREATE TABLE `Order` (
-    `OrderID` VARCHAR(50) PRIMARY KEY,
-    `OrderAmount` DECIMAL(10,2) NOT NULL,
-    `OrderCurrency` VARCHAR(3) NOT NULL,
-    `OrderStatus` VARCHAR(50) NOT NULL,
-    `OrderDate` DATETIME NOT NULL,
-    `CustomerName` VARCHAR(100) NOT NULL,
-    `ShippingAddress` VARCHAR(100) NOT NULL,
+    `orderID` VARCHAR(50) PRIMARY KEY,
+    `orderAmount` DECIMAL(10,2) NOT NULL,
+    `orderCurrency` VARCHAR(3) NOT NULL,
+    `orderStatus` VARCHAR(50) NOT NULL,
+    `orderDate` DATETIME NOT NULL,
+    `customerName` VARCHAR(100) NOT NULL,
+    `shippingAddress` VARCHAR(100) NOT NULL,
     `MerchantTaxID` VARCHAR(50),
     FOREIGN KEY (`MerchantTaxID`) REFERENCES `Merchant`(`MerchantTaxID`)
 );
@@ -43,27 +43,27 @@ CREATE TABLE `Order` (
 -- Payment Table
 DROP TABLE IF EXISTS `Payment`;
 CREATE TABLE `Payment` (
-    `PaymentTransactionID` VARCHAR(50) PRIMARY KEY,
-    `PaymentAmount` DECIMAL(10,2) NOT NULL,
-    `PaymentMethod` VARCHAR(50) NOT NULL,
-    `PaymentStatus` VARCHAR(50) NOT NULL,
-    `PaymentDate` DATETIME NOT NULL,
-    `PaymentCurrency` VARCHAR(3) NOT NULL,
-    `PaymentFee` DECIMAL(10,2),
-    `OrderID` VARCHAR(50),
+    `paymentTransactionID` VARCHAR(50) PRIMARY KEY,
+    `paymentAmount` DECIMAL(10,2) NOT NULL,
+    `paymentMethod` VARCHAR(50) NOT NULL,
+    `paymentStatus` VARCHAR(50) NOT NULL,
+    `paymentDate` DATETIME NOT NULL,
+    `paymentCurrency` VARCHAR(3) NOT NULL,
+    `paymentFee` DECIMAL(10,2),
+    `orderID` VARCHAR(50),
     FOREIGN KEY (`OrderID`) REFERENCES `Order`(`OrderID`)
 );
 
 -- MerchantPayout Table
 DROP TABLE IF EXISTS `MerchantPayout`;
 CREATE TABLE `MerchantPayout` (
-    `PayoutReference` VARCHAR(50) PRIMARY KEY,
-    `PayoutAmount` DECIMAL(10,2) NOT NULL,
-    `PayoutMethod` VARCHAR(50) NOT NULL,
-    `PayoutStatus` VARCHAR(50) NOT NULL,
-    `PayoutDate` DATETIME NOT NULL,
-    `PayoutCurrency` VARCHAR(3) NOT NULL,
-    `PayoutFee` DECIMAL(10,2),
-    `MerchantTaxID` VARCHAR(50),
+    `payoutReference` VARCHAR(50) PRIMARY KEY,
+    `payoutAmount` DECIMAL(10,2) NOT NULL,
+    `payoutMethod` VARCHAR(50) NOT NULL,
+    `payoutStatus` VARCHAR(50) NOT NULL,
+    `payoutDate` DATETIME NOT NULL,
+    `payoutCurrency` VARCHAR(3) NOT NULL,
+    `payoutFee` DECIMAL(10,2),
+    `merchantTaxID` VARCHAR(50),
     FOREIGN KEY (`MerchantTaxID`) REFERENCES `Merchant`(`MerchantTaxID`)
 );
