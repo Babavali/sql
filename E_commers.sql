@@ -1,73 +1,69 @@
-
--- Products Table
-DROP TABLE IF EXISTS `products`;
-CREATE TABLE `products` (
-    `productReference` VARCHAR(50) UNIQUE NOT NULL,
-    `productName` VARCHAR(100) NOT NULL,
-    `productDescription` TEXT,
-    `currency` VARCHAR(100) NOT NULL,
-    `productPrice` DECIMAL(10,2) NOT NULL,
-    `productStatus` VARCHAR(20) NOT NULL CHECK (status IN ('active', 'inactive', 'archived')),
-    `created_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (`platform_id`) REFERENCES `ecommerce_platforms`(`id`) ON DELETE CASCADE
+-- Merchant Table
+DROP TABLE IF EXISTS `Merchant`;
+CREATE TABLE `Merchant` (
+    `MerchantName` VARCHAR(100) NOT NULL,
+    `MerchantTaxID` VARCHAR(50),
+    `MerchantStatus` ENUM('Active', 'Inactive', 'Suspended') NOT NULL,
+    `MerchantAddress` TEXT,
+    `MerchantEmail` VARCHAR(100),
+    `MerchantPhone` VARCHAR(50),
+    `MerchantRegistrationDate` DATETIME,
+    PRIMARY KEY (`MerchantTaxID`)
 );
 
--- Orders Table
-DROP TABLE IF EXISTS `orders`;
-CREATE TABLE `orders` (
-    `currency` VARCHAR(100) NOT NULL,
-    `platformType` VARCHAR(50) UNIQUE NOT NULL,
-    `orderReference` VARCHAR(50) UNIQUE NOT NULL,
-    `orderStatus` VARCHAR(20) NOT NULL CHECK (status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled', 'refunded')),
-    `orderAmount` DECIMAL(10,2) NOT NULL,
-    `order_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `customer_reference` VARCHAR(50) NOT NULL,
-    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (`platform_id`) REFERENCES `ecommerce_platforms`(`id`) ON DELETE CASCADE
+-- Product Table
+DROP TABLE IF EXISTS `Product`;
+CREATE TABLE `Product` (
+    `ProductSKU` VARCHAR(50) PRIMARY KEY,
+    `ProductName` VARCHAR(100) NOT NULL,
+    `ProductPrice` DECIMAL(10,2) NOT NULL,
+    `ProductCurrency` VARCHAR(3) NOT NULL,
+    `ProductCategory` VARCHAR(50),
+    `ProductStock` INT NOT NULL DEFAULT 0,
+    `ProductDescription` TEXT,
+    `MerchantTaxID` VARCHAR(50),
+    FOREIGN KEY (`MerchantTaxID`) REFERENCES `Merchant`(`MerchantTaxID`)
 );
 
-DROP TABLE IF EXIST `ecommercefacility`;
-CREATE TABLE `ecommercefacility` (
-    `eCommerceInstanceReference` VARCHAR(50) PRIMARY KEY,
-    `eCommercePlatformName` VARCHAR(100),
-    `merchantReference` VARCHAR(50),
-    `productReference` VARCHAR(50),
-    `orderReference` VARCHAR(50),
-    `paymentReference` VARCHAR(50)
+-- Order Table
+DROP TABLE IF EXISTS `Order`;
+CREATE TABLE `Order` (
+    `OrderID` VARCHAR(50) PRIMARY KEY,
+    `OrderAmount` DECIMAL(10,2) NOT NULL,
+    `OrderCurrency` VARCHAR(3) NOT NULL,
+    `OrderStatus` ENUM('Pending', 'Paid', 'Shipped', 'Delivered') NOT NULL,
+    `OrderDate` DATETIME NOT NULL,
+    `CustomerName` VARCHAR(100) NOT NULL,
+    `ShippingAddress` TEXT NOT NULL,
+    `MerchantTaxID` VARCHAR(50),
+    FOREIGN KEY (`MerchantTaxID`) REFERENCES `Merchant`(`MerchantTaxID`)
 );
 
-DROP TABLE IF EXISTS `merchant`;
-CREATE TABLE  `merchant` (
-    `merchantReference` VARCHAR(50) PRIMARY KEY,
-    `merchantName` VARCHAR(100) NOT NULL,
-    `merchantTaxID` VARCHAR(50),
-    `merchantStatus` ENUM('Active', 'Inactive', 'Suspended') NOT NULL,
-    `eCommerceInstanceReference` VARCHAR(50),
-    FOREIGN KEY (eCommerceInstanceReference) REFERENCES ecommercefacility(eCommerceInstanceReference)
+
+-- Payment Table
+DROP TABLE IF EXISTS `Payment`;
+CREATE TABLE `Payment` (
+    `PaymentTransactionID` VARCHAR(50) PRIMARY KEY,
+    `PaymentAmount` DECIMAL(10,2) NOT NULL,
+    `PaymentMethod` ENUM('CreditCard', 'PayPal', 'BankTransfer') NOT NULL,
+    `PaymentStatus` ENUM('Pending', 'Completed', 'Failed') NOT NULL,
+    `PaymentDate` DATETIME NOT NULL,
+    `PaymentCurrency` VARCHAR(3) NOT NULL,
+    `PaymentFee` DECIMAL(10,2),
+    `OrderID` VARCHAR(50),
+    FOREIGN KEY (`OrderID`) REFERENCES `Order`(`OrderID`)
 );
 
-DROP TABLE IF EXISTS `payment`;
-CREATE TABLE  `payment` (
-    `paymentReference` VARCHAR(50) PRIMARY KEY,
-    `paymentAmount` DECIMAL(10, 2) NOT NULL,
-    `paymentMethod` ENUM('CreditCard', 'PayPal', 'BankTransfer') NOT NULL,
-    `paymentStatus` ENUM('Pending', 'Completed', 'Failed') NOT NULL,
-    `eCommerceInstanceReference` VARCHAR(50),
-    `orderReference` VARCHAR(50),
-    FOREIGN KEY (eCommerceInstanceReference) REFERENCES ecommercefacility(eCommerceInstanceReference),
-    FOREIGN KEY (orderReference) REFERENCES orders(orderReference)
-
-);
-
-DROP TABLE IF EXISTS `merchantpayout`:
-CREATE TABLE `merchantpayout` (
-    `payoutReference` VARCHAR(50) PRIMARY KEY,
-    `payoutAmount` DECIMAL(10, 2) NOT NULL,
-    `payoutMethod` ENUM('BankTransfer', 'PayPal') NOT NULL,
-    `payoutStatus` ENUM('Pending', 'Completed', 'Failed') NOT NULL,
-    `eCommerceInstanceReference` VARCHAR(50),
-    `merchantReference` VARCHAR(50),
-    FOREIGN KEY (eCommerceInstanceReference) REFERENCES ecommercefacility(eCommerceInstanceReference),
-    FOREIGN KEY (merchantReference) REFERENCES merchant(merchantReference)
+-- MerchantPayout Table
+DROP TABLE IF EXISTS `MerchantPayout`;
+CREATE TABLE `MerchantPayout` (
+    `PayoutReference` VARCHAR(50) PRIMARY KEY,
+    `PayoutAmount` DECIMAL(10,2) NOT NULL,
+    `PayoutMethod` ENUM('BankTransfer', 'PayPal') NOT NULL,
+    `PayoutStatus` ENUM('Pending', 'Completed', 'Failed') NOT NULL,
+    `PayoutDate` DATETIME NOT NULL,
+    `PayoutCurrency` VARCHAR(3) NOT NULL,
+    `PayoutFee` DECIMAL(10,2),
+    `MerchantTaxID` VARCHAR(50),
+    FOREIGN KEY (`MerchantTaxID`) REFERENCES `Merchant`(`MerchantTaxID`)
 );
