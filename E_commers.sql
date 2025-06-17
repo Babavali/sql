@@ -4,7 +4,7 @@ CREATE TABLE `Merchant` (
     `MerchantName` VARCHAR(100) NOT NULL,
     `MerchantTaxID` VARCHAR(50),
     `MerchantStatus` ENUM('Active', 'Inactive', 'Suspended') NOT NULL,
-    `MerchantAddress` TEXT,
+    `MerchantAddress` VARCHAR(100),
     `MerchantEmail` VARCHAR(100),
     `MerchantPhone` VARCHAR(50),
     `MerchantRegistrationDate` DATETIME,
@@ -20,7 +20,7 @@ CREATE TABLE `Product` (
     `ProductCurrency` VARCHAR(3) NOT NULL,
     `ProductCategory` VARCHAR(50),
     `ProductStock` INT NOT NULL DEFAULT 0,
-    `ProductDescription` TEXT,
+    `ProductDescription` VARCHAR(100),
     `MerchantTaxID` VARCHAR(50),
     FOREIGN KEY (`MerchantTaxID`) REFERENCES `Merchant`(`MerchantTaxID`)
 );
@@ -34,7 +34,7 @@ CREATE TABLE `Order` (
     `OrderStatus` ENUM('Pending', 'Paid', 'Shipped', 'Delivered') NOT NULL,
     `OrderDate` DATETIME NOT NULL,
     `CustomerName` VARCHAR(100) NOT NULL,
-    `ShippingAddress` TEXT NOT NULL,
+    `ShippingAddress` VARCHAR(100) NOT NULL,
     `MerchantTaxID` VARCHAR(50),
     FOREIGN KEY (`MerchantTaxID`) REFERENCES `Merchant`(`MerchantTaxID`)
 );
