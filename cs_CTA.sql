@@ -1,5 +1,5 @@
 -- CTA Clicked Events Table
-DROP TABLE IF EXISTS `cta_clicked`;
+-- DROP TABLE IF EXISTS `cta_clicked`;
 CREATE TABLE `cta_clicked` (
     `id` VARCHAR(255),
     `uuid_ts` DATE,
@@ -52,7 +52,7 @@ CREATE TABLE `cta_clicked` (
 );
 
 -- CTA Hovered Events Table
-DROP TABLE IF EXISTS `cta_hovered`;
+-- DROP TABLE IF EXISTS `cta_hovered`;
 CREATE TABLE `cta_hovered` (
     `id` VARCHAR(255),
     `cta_name` VARCHAR(255),
@@ -99,7 +99,7 @@ CREATE TABLE `cta_hovered` (
 );
 
 -- Identifies Events Table
-DROP TABLE IF EXISTS `identifies`;
+-- DROP TABLE IF EXISTS `identifies`;
 CREATE TABLE `identifies` (
     `id` VARCHAR(255),
     `context_destination_id` VARCHAR(255),
@@ -152,7 +152,7 @@ CREATE TABLE `identifies` (
 );
 
 -- Pages Events Table
-DROP TABLE IF EXISTS `pages`;
+-- DROP TABLE IF EXISTS `pages`;
 CREATE TABLE `pages` (
     `id` VARCHAR(255),
     `path` VARCHAR(255),
@@ -221,7 +221,7 @@ CREATE TABLE `pages` (
 );
 
 -- Tracks Events Table
-DROP TABLE IF EXISTS `tracks`;
+-- DROP TABLE IF EXISTS `tracks`;
 CREATE TABLE `tracks` (
     `id` VARCHAR(255),
     `anonymous_id` VARCHAR(255),
