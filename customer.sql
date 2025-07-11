@@ -1,3 +1,8 @@
+-- Customer table schema
+--DROP TABLE IF EXISTS `customer`;
+CREATE TABLE `customer` (
+    `accountId` INT PRIMARY KEY
+);
 
 -- DROP TABLE IF EXISTS `client_website_page_queries`;
 CREATE TABLE `clientWebsitePageQueries` (
