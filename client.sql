@@ -1,5 +1,5 @@
 -- DROP TABLE IF EXISTS `client_website_page_queries`;
-CREATE TABLE `client_website_page_queries` (
+CREATE TABLE `clientwebsitepagequeries` (
     `id` INT PRIMARY KEY,
     `clientWebsiteId` INT,
     `clientWebsitePageId` INT,
