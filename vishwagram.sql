@@ -1,6 +1,7 @@
 -- Media Content Table
 DROP TABLE IF EXISTS `MediaContent`;
 CREATE TABLE `MediaContent` (
+    `id` VARCHAR(255) PRIMARY KEY,
     `s3VideoUrl` VARCHAR(255),
     `s3AudioUrl` VARCHAR(255)
 );
