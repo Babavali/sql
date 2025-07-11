@@ -1,15 +1,15 @@
 
 -- DROP TABLE IF EXISTS `client_website_page_queries`;
-CREATE TABLE `client_website_page_queries` (
+CREATE TABLE `clientWebsitePageQueries` (
     `id` INT PRIMARY KEY ,
-    `client_website_id` INT ,
-    `client_website_page_id` INT ,
+    `clientWebsiteId` INT ,
+    `clientWebsitePageId` INT ,
     `query` TEXT,
     `clicks` INT ,
     `impressions` INT ,
-    `extracted_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    `extracted_to` DATETIME ,
-    `extracted_from` DATETIME
+    `extractedAt` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `extractedTo` DATETIME ,
+    `extractedFrom` DATETIME
 );
 
 
