@@ -1,14 +1,13 @@
 -- Media Content Table
 DROP TABLE IF EXISTS `MediaContent`;
-CREATE TABLE `MediaContent` (
+CREATE TABLE `Media` (
     `id` VARCHAR(255) PRIMARY KEY,
-    `s3VideoUrl` VARCHAR(255),
-    `s3AudioUrl` VARCHAR(255)
+    `video_url` VARCHAR(255),
+    `audio_url` VARCHAR(255)
 );
 
--- Photo Filters Table (nested relationship with MediaContent)
-DROP TABLE IF EXISTS `PhotoFilters`;
-CREATE TABLE `PhotoFilters` (
-    `photoUrl` VARCHAR(50) PRIMARY KEY,
-    `filterName` VARCHAR(100) NOT NULL
+-- Photo Filter Table
+CREATE TABLE `PhotoFilter` (
+    `photo_url` VARCHAR(50) PRIMARY KEY,
+    `name` VARCHAR(100) NOT NULL
 );
