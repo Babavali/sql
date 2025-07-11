@@ -1,6 +1,6 @@
 -- Customer table schema
 --DROP TABLE IF EXISTS `customer`;
-CREATE TABLE `client` (
+CREATE TABLE `customer` (
     `accountId` INT PRIMARY KEY,
     `addsetId` INT,
     `doctorId` INT,
