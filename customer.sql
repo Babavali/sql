@@ -1,6 +1,6 @@
 -- Customer table schema
 --DROP TABLE IF EXISTS `customer`;
-CREATE TABLE `client_website_page_queries` (
+CREATE TABLE `client` (
     `accountId` INT PRIMARY KEY,
     `addsetId` INT,
     `doctorId` INT,
